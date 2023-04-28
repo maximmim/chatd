@@ -17,16 +17,73 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function Main() {
     
+const saveData = async (key, value) => {
+    try {
+      await AsyncStorage.setItem(key, value);
+    } catch (error) {
+      console.error('Помилка збереження даних локально:', error);
+    }
+  };
+  // отримання даних
+  const getData = async (key) => {
+    try {
+      const value = await AsyncStorage.getItem(key);
+      if (value !== null) {
+           return value;
+      }
+    } catch (error) {
+      console.error('Помилка отримання даних локально:', error);
+    }
+  };
+  // видалення даних
+  const removeData = async (key) => {
+    try {
+      await AsyncStorage.removeItem(key);
+    } catch (error) {
+      console.error('Помилка видалення даних локально:', error);
+    }
+  };
+  // очищення всього локального сховища
+ const clearAllData = async () => {
+    try {
+      await AsyncStorage.clear();
+    } catch (error) {
+      console.error('Помилка очищення локального сховища:', error);
+    }
+  };
+  
     const navigation = useNavigation()
     const [items,setitems] = useState([])
     useEffect(f,[])
     function f() {        
-     setInterval(getdate,1000)
-    }
-    
+     setInterval(getdate,5000);
+
+    getData("id").then((data)=> {
+        if (data == undefined) {
+            const num1 = Math.floor(Math.random() * 10);
+            const num2 = Math.floor(Math.random() * 10);
+            const num3 = Math.floor(Math.random() * 10);
+            const num4 = Math.floor(Math.random() * 10);
+            const id = `${num1}${num2}${num3}${num4}`;
+            saveData("id",id)
+            
+}
+else {
+    getData("id").then((data)=> {
+       // alert(data)
+    })
+}
+    })
+
+      }
+       
+        
+      
+         
+ 
     function getdate() { 
 
        
@@ -46,7 +103,7 @@ export default function Main() {
                // Handle any errors
                Alert.alert("Eror 404","Please a reconnect to server")
                console.error(error);
-               Vibration.vibrate(1000)
+               //Vibration.vibrate(1000)
              })
        
        
@@ -54,33 +111,20 @@ export default function Main() {
        }
   return (
     
-    <View style={styles.container}>
+<View style={styles.container}>
 
 <FlatList
-
-
-
-
-
-
 data={items}
 renderItem={({item})=>(
-
-<Message dext={item.msg}/>
-
-  
+<Message dext={item.msg} name_id={item.name_id}/>
 )}
-
-
 />
-
-        
-        <Input/>
+<Input/>
 
 
 
-      <StatusBar style="auto" />
-    </View>
+<StatusBar style="auto" />
+</View>
   );
 }
 

@@ -18,13 +18,48 @@ import axios from 'axios';
 import { Platform } from 'react-native';
 
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
+const saveData = async (key, value) => {
+    try {
+      await AsyncStorage.setItem(key, value);
+    } catch (error) {
+      console.error('Помилка збереження даних локально:', error);
+    }
+  };
+  // отримання даних
+  const getData = async (key) => {
+    try {
+      const value = await AsyncStorage.getItem(key);
+      if (value !== null) {
+           return value;
+      }
+    } catch (error) {
+      console.error('Помилка отримання даних локально:', error);
+    }
+  };
+  // видалення даних
+  const removeData = async (key) => {
+    try {
+      await AsyncStorage.removeItem(key);
+    } catch (error) {
+      console.error('Помилка видалення даних локально:', error);
+    }
+  };
+  // очищення всього локального сховища
+ const clearAllData = async () => {
+    try {
+      await AsyncStorage.clear();
+    } catch (error) {
+      console.error('Помилка очищення локального сховища:', error);
+    }
+  };
 
 export default function Input() {
     const navigation = useNavigation();
     const [message, setmassage] = useState('');
     const [inputFocused, setInputFocused] = useState(false);
-
+    const inputRef = useRef();
     const handleFocus = () => { 
       
       if (Platform.OS === 'web') {
@@ -61,22 +96,28 @@ export default function Input() {
 
       
      
+     getData("id").then((data)=>{
+
      
       //navigation.navigate('Головна')
         axios.post('https://644ab0e4a8370fb32155be44.mockapi.io/item', {
           msg: message,
+          name_id:data
         
           
         })
           .then(response => {
             // Handle the response data
             console.log(response.data);
+            inputRef.current.clear();
+            setmassage('')
+
           })
           .catch(error => {
             // Handle any errors
             Alert.alert("Eror 404","Please resubmit to the server")
             console.error(error);
-          }); 
+          }); })
     }
     
   
@@ -88,6 +129,7 @@ export default function Input() {
 
     <View style={styles.bottom}>
 <TextInput
+ref={inputRef}
                 onFocus={handleFocus}
                 onBlur={handleBlur}
         style={styles.input}
