@@ -59,7 +59,7 @@ const saveData = async (key, value) => {
 
 
 export default function Setings() {
-const [y,sety] = useState('')
+const [y,sety] = useState("")
 const [cae,setcae] =useState("")
 const [csae,setcsae] =useState("")
 const navigation = useNavigation()
@@ -67,8 +67,10 @@ const navigation = useNavigation()
 
 useEffect(()=> {
     getData("id").then((data)=>{
-sety(data)
-})
+sety(data);
+
+});
+
 },[])
 function da() {
 
@@ -103,7 +105,22 @@ function das() {
     <View style={styles.container}>
 {
 
-y === 9730 || y === 2004 || y === 5527 && (
+y == 9730 && (
+  <View>
+<TouchableOpacity onPress={deleteAllItems}><Text style={{position:"absolute",top:-200,left:-45,fontSize:30}}>delete</Text></TouchableOpacity>
+  </View>
+)}
+{
+
+ y== 2004 && (
+  <View>
+<TouchableOpacity onPress={deleteAllItems}><Text style={{position:"absolute",top:-200,left:-45,fontSize:30}}>delete</Text></TouchableOpacity>
+  </View>
+)}
+
+{
+
+y == 5527 && (
   <View>
 <TouchableOpacity onPress={deleteAllItems}><Text style={{position:"absolute",top:-200,left:-45,fontSize:30}}>delete</Text></TouchableOpacity>
   </View>

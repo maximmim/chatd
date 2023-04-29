@@ -62,13 +62,17 @@ export default function Input() {
     const [message, setmassage] = useState('');
     const [inputFocused, setInputFocused] = useState(false);
     const inputRef = useRef();
-    
+    const [id,setid] =useState()
+useEffect(()=>{
+    getData("id").then((data)=>{
+setid(data)
+})
 
+},[])
 
-    
 
     const handleFocus = () => { 
-
+sendmassage()
       if (Platform.OS === 'web') {
         setInputFocused(false);
         down()
@@ -81,6 +85,7 @@ export default function Input() {
     };
   
     const handleBlur = () => {
+      sendmassage()
       if (Platform.OS === 'web') {
         up()
         // ваш код для приложения React Native на вебе
@@ -98,28 +103,33 @@ export default function Input() {
     }
 
     function sendmassage() {
-           getData("id").then((data)=>{
+      Keyboard.dismiss();            
+      
+      
+           
 
      
       //navigation.navigate('Головна')
         axios.post('https://644ab0e4a8370fb32155be44.mockapi.io/item', {
           msg: message,
-          name_id:data
+          name_id:id
         
           
         })
           .then(response => {
             // Handle the response data
             console.log(response.data);
-            inputRef.current.clear();
-            setmassage('')
-            Keyboard.dismiss();
+
           })
           .catch(error => {
             // Handle any errors
             Alert.alert("Eror 404","Please resubmit to the server")
             console.error(error);
-          }); })
+          }).finally((data)=>{
+            
+            setmassage('')
+            inputRef.current.clear();
+          }) 
     }
     
       

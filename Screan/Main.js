@@ -63,7 +63,7 @@ const saveData = async (key, value) => {
 
     useEffect(f,[])
     function f() {        
-     setInterval(getdate,1000);
+     setInterval(getdate,2000);
 
     getData("id").then((data)=> {
         if (data == undefined) {
