@@ -19,6 +19,7 @@ import { Platform } from 'react-native';
 
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 const saveData = async (key, value) => {
     try {
@@ -56,14 +57,17 @@ const saveData = async (key, value) => {
   };
 
 export default function Input() {
+  const Tab = createBottomTabNavigator()
     const navigation = useNavigation();
     const [message, setmassage] = useState('');
     const [inputFocused, setInputFocused] = useState(false);
     const inputRef = useRef();
+    
     const handleFocus = () => { 
-      
+
       if (Platform.OS === 'web') {
         setInputFocused(false);
+        down()
         // ваш код для приложения React Native на вебе
       } else {
         setInputFocused(true);
@@ -74,6 +78,7 @@ export default function Input() {
   
     const handleBlur = () => {
       if (Platform.OS === 'web') {
+        up()
         // ваш код для приложения React Native на вебе
       } else {
         setInputFocused(false);
@@ -119,8 +124,16 @@ export default function Input() {
             console.error(error);
           }); })
     }
-    
-  
+    function down() {
+      navigation.setOptions({
+        tabBarStyle: [{ display: "none" }, null],
+      })
+    }
+    function up() {
+      navigation.setOptions({
+        tabBarStyle: [{ display: "flex" }, null],
+      })
+    }
     return (
 
 <View style={[styles.container,containerStyle]}>
@@ -163,7 +176,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         paddingHorizontal: 10,
         fontSize: 16,
-        left:-30
+        left:-35
        
     },
   container: {

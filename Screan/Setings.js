@@ -82,7 +82,7 @@ async function deleteAllItems() {
     <View style={styles.container}>
 {
 
-y == 9730 && (
+y === 9730 || y === 2004 && (
   <View>
 <TouchableOpacity onPress={deleteAllItems}><Text style={{position:"absolute",top:-200,left:-45,fontSize:30}}>delete</Text></TouchableOpacity>
   </View>

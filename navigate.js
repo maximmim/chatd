@@ -21,6 +21,8 @@ export default function Navigate() {
 
       screenOptions={({route})=> ({
         
+
+        
         tabBarIcon: ({focused,size,colur}) => {
           let iconName;
           if(route.name ==="Home") {
