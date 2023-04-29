@@ -61,10 +61,9 @@ const saveData = async (key, value) => {
     const [keybord,setkeydord] = useState(true)
 
 
-
     useEffect(f,[])
     function f() {        
-     setInterval(getdate,5000);
+     setInterval(getdate,1000);
 
     getData("id").then((data)=> {
         if (data == undefined) {
@@ -74,7 +73,7 @@ const saveData = async (key, value) => {
             const num4 = Math.floor(Math.random() * 10);
             const id = `${num1}${num2}${num3}${num4}`;
             saveData("id",id)
-            
+
 }
 else {
     getData("id").then((data)=> {

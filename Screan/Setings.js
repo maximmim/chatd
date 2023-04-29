@@ -15,6 +15,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useState } from 'react';
 import GradientButton from '../bundle/buthon';
 import axios from 'axios';
+import { SelectList } from 'react-native-dropdown-select-list';
+import { useNavigation } from '@react-navigation/native';
+
+
 const saveData = async (key, value) => {
     try {
       await AsyncStorage.setItem(key, value);
@@ -56,6 +60,11 @@ const saveData = async (key, value) => {
 
 export default function Setings() {
 const [y,sety] = useState('')
+const [cae,setcae] =useState("")
+const [csae,setcsae] =useState("")
+const navigation = useNavigation()
+
+
 useEffect(()=> {
     getData("id").then((data)=>{
 sety(data)
@@ -78,24 +87,46 @@ async function deleteAllItems() {
       
     }
   }  
+  const catar = [
+    {key:'Man',value:"Man"},
+    {key:'Girl',value:"Girl"},
+  ]
+
+function das() {
+  saveData("gender",cae)
+  navigation.navigate("home")
+  alert(cae)
+}
+
+
   return ( 
     <View style={styles.container}>
 {
 
-y === 9730 || y === 2004 && (
+y === 9730 || y === 2004 || y === 5527 && (
   <View>
 <TouchableOpacity onPress={deleteAllItems}><Text style={{position:"absolute",top:-200,left:-45,fontSize:30}}>delete</Text></TouchableOpacity>
   </View>
 )}
 
       <Text>Loading...</Text>
-      
+
+      {/*
+      <SelectList
+onSelect={das}
+setSelected={setcae}
+data={catar}
+placeholder={'Select your gender'}
+
+      />
+*/}      
       <StatusBar style="auto" />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+
   container: {
     flex: 1,
     backgroundColor: '#fff',
