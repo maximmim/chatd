@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
     bottom: {
         position: 'absolute', // Абсолютное позиционирование
         bottom: 0, // Расположение внизу экрана
-
+        
       },
     input: {
         height: 50,
@@ -176,7 +176,8 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         paddingHorizontal: 10,
         fontSize: 16,
-        left:-35
+        marginLeft:-50,
+        
        
     },
   container: {

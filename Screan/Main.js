@@ -18,8 +18,9 @@ import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
 export default function Main() {
-    
+
 const saveData = async (key, value) => {
     try {
       await AsyncStorage.setItem(key, value);
@@ -57,6 +58,10 @@ const saveData = async (key, value) => {
   
     const navigation = useNavigation()
     const [items,setitems] = useState([])
+    const [keybord,setkeydord] = useState(true)
+
+
+
     useEffect(f,[])
     function f() {        
      setInterval(getdate,5000);
@@ -80,7 +85,9 @@ else {
 
       }
        
-        
+    function aw() {
+
+    }
       
          
  
@@ -112,16 +119,14 @@ else {
   return (
     
 <View style={styles.container}>
-
 <FlatList
 data={items}
 renderItem={({item})=>(
 <Message dext={item.msg} name_id={item.name_id}/>
 )}
 />
-<Input/>
 
-
+{keybord && <Input/> }
 
 <StatusBar style="auto" />
 </View>
@@ -129,6 +134,11 @@ renderItem={({item})=>(
 }
 
 const styles = StyleSheet.create({
+    bottom: {
+        position: 'absolute', // Абсолютное позиционирование
+        bottom: 0, // Расположение внизу экрана
+        
+      },
     massage: {
         display: "flex",
         flexDirection: "row",
