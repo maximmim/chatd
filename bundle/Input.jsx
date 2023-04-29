@@ -63,6 +63,10 @@ export default function Input() {
     const [inputFocused, setInputFocused] = useState(false);
     const inputRef = useRef();
     
+
+
+    
+
     const handleFocus = () => { 
 
       if (Platform.OS === 'web') {
@@ -94,14 +98,7 @@ export default function Input() {
     }
 
     function sendmassage() {
-      Keyboard.dismiss();
-    
-      
-
-
-      
-     
-     getData("id").then((data)=>{
+           getData("id").then((data)=>{
 
      
       //navigation.navigate('Головна')
@@ -116,7 +113,7 @@ export default function Input() {
             console.log(response.data);
             inputRef.current.clear();
             setmassage('')
-
+            Keyboard.dismiss();
           })
           .catch(error => {
             // Handle any errors
@@ -124,6 +121,13 @@ export default function Input() {
             console.error(error);
           }); })
     }
+    
+      
+
+
+      
+     
+
     function down() {
       navigation.setOptions({
         tabBarStyle: [{ display: "none" }, null],

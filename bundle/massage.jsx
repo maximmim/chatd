@@ -50,15 +50,15 @@ const saveData = async (key, value) => {
 
 export default function Message({dext,name_id}) {
 const [left,setleft] = useState(50)
-
+const [id,setid] = useState('')
 
 
 getData("id").then((id)=>{
-
+setid(id)
 
 })   
     return (
-<View style={styles.container}>
+<View style={name_id === id ? styles.container : styles.containerd} >
 <Text >
 {
 
@@ -80,8 +80,23 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         left:10,
         marginLeft:230,
-        padding: 16,
+        padding: 12,
         margin: 10,
+        
     },
+    containerd: {
+        
+      backgroundColor: '#808080',
+      borderRadius:10,
+      
+      flex:1,
+      alignItems: 'center',
+      justifyContent: 'center',
+      left:10,
+      marginLeft:230,
+      padding: 12,
+      margin: 10,
+      
+  },
   });
   
