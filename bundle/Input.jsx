@@ -63,11 +63,14 @@ export default function Input() {
     const [inputFocused, setInputFocused] = useState(false);
     const inputRef = useRef();
     const [id,setid] =useState()
+    const [nick,setnick] = useState("")
 useEffect(()=>{
     getData("id").then((data)=>{
 setid(data)
 })
-
+getData("nick").then((data)=>{
+  setnick(data)
+  })
 },[])
 
 
@@ -105,14 +108,26 @@ sendmassage()
     function sendmassage() {
       Keyboard.dismiss();            
       
-      
-           
+   
+      if (message == "") {
 
+      }
+      else {
+      if (nick === undefined) {
+        
+
+        navigation.navigate("Setings")
+
+
+        
+      }
+      else {
      
       //navigation.navigate('Головна')
         axios.post('https://644ab0e4a8370fb32155be44.mockapi.io/item', {
           msg: message,
-          name_id:id
+          name_id:id,
+          nick:nick
         
           
         })
@@ -130,6 +145,7 @@ sendmassage()
             setmassage('')
             inputRef.current.clear();
           }) 
+        }}
     }
     
       

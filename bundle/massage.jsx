@@ -48,7 +48,7 @@ const saveData = async (key, value) => {
     }
   };
 
-export default function Message({dext,name_id}) {
+export default function Message({dext,name_id,nick}) {
 const [left,setleft] = useState(50)
 const [id,setid] = useState('')
 
@@ -59,7 +59,12 @@ setid(id)
 })   
     return (
 <View style={name_id === id ? styles.container : styles.containerd} >
-<Text >
+<Text style={styles.nick}>
+  {
+    nick
+  }
+</Text>
+<Text style={styles.text} >
 {
 
 dext
@@ -70,8 +75,14 @@ dext
     )
 }
 const styles = StyleSheet.create({
+  text:{
+    fontSize:15
+  },
+  nick:{
+    fontSize:10,
+    
+  },
     container: {
-        
         backgroundColor: '#00BFFF',
         borderRadius:10,
         
@@ -85,7 +96,6 @@ const styles = StyleSheet.create({
         
     },
     containerd: {
-        
       backgroundColor: '#808080',
       borderRadius:10,
       

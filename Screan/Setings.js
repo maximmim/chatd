@@ -12,11 +12,13 @@ import {
     FlatList
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import GradientButton from '../bundle/buthon';
 import axios from 'axios';
 import { SelectList } from 'react-native-dropdown-select-list';
 import { useNavigation } from '@react-navigation/native';
+import { addNotificationReceivedListener } from 'expo-notifications';
+import { AppLoadingManager } from 'expo';
 
 
 const saveData = async (key, value) => {
@@ -63,15 +65,29 @@ const [y,sety] = useState("")
 const [cae,setcae] =useState("")
 const [csae,setcsae] =useState("")
 const navigation = useNavigation()
-
+const input = useRef()
+const [nick,setnick] = useState("")
+const [g,setg] = useState("")
 
 useEffect(()=> {
     getData("id").then((data)=>{
 sety(data);
 
 });
+getData("nick").then((data)=>{
+  setg(data);
+if (data === undefined) 
+{
+  alert("В вас нема ніка")
+}
+  });
+//removeData("nick")
+
+
+
 
 },[])
+
 function da() {
 
 }
@@ -99,7 +115,13 @@ function das() {
   navigation.navigate("home")
   alert(cae)
 }
+function sendnick() {
+  saveData("nick",nick)
+  alert("Потрібне перезавантаження буль ласка перезавантажте застосунок")
+  
+  
 
+}
 
   return ( 
     <View style={styles.container}>
@@ -125,8 +147,35 @@ y == 5527 && (
 <TouchableOpacity onPress={deleteAllItems}><Text style={{position:"absolute",top:-200,left:-45,fontSize:30}}>delete</Text></TouchableOpacity>
   </View>
 )}
+{g === undefined && 
 
+<View style={styles.cos}>
+
+
+
+
+
+<TextInput
+ref={input}
+
+        style={styles.input}
+        value={nick}
+        placeholder="Ведіть свій нік"
+        onChangeText={text => setnick(text)}
+      />  
+<TouchableOpacity >
+  <Button onPress={sendnick} title='Enter'></Button>
+</TouchableOpacity>
+</View>
+
+}
       <Text>Loading...</Text>
+
+
+
+
+
+
 
       {/*
       <SelectList
@@ -143,11 +192,25 @@ placeholder={'Select your gender'}
 }
 
 const styles = StyleSheet.create({
-
+  cos:{
+  top:140
+  },
+  input: {
+    height: 50,
+    width:350,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderRadius: 10,
+    paddingHorizontal: 10,
+    fontSize: 16,
+    
+   
+},
   container: {
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
   },
+
 });

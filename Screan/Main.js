@@ -84,9 +84,7 @@ else {
 
       }
        
-    function aw() {
 
-    }
       
          
  
@@ -121,7 +119,7 @@ else {
 <FlatList
 data={items}
 renderItem={({item})=>(
-<Message dext={item.msg} name_id={item.name_id}/>
+<Message dext={item.msg} name_id={item.name_id} nick={item.nick}/>
 )}
 />
 
