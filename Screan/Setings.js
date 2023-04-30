@@ -127,26 +127,12 @@ function sendnick() {
     <View style={styles.container}>
 {
 
-y == 9730 && (
-  <View>
-<TouchableOpacity onPress={deleteAllItems}><Text style={{position:"absolute",top:-200,left:-45,fontSize:30}}>delete</Text></TouchableOpacity>
-  </View>
-)}
-{
-
- y== 2004 && (
+g === "Maxim" && (
   <View>
 <TouchableOpacity onPress={deleteAllItems}><Text style={{position:"absolute",top:-200,left:-45,fontSize:30}}>delete</Text></TouchableOpacity>
   </View>
 )}
 
-{
-
-y == 5527 && (
-  <View>
-<TouchableOpacity onPress={deleteAllItems}><Text style={{position:"absolute",top:-200,left:-45,fontSize:30}}>delete</Text></TouchableOpacity>
-  </View>
-)}
 {g === undefined && 
 
 <View style={styles.cos}>

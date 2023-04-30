@@ -53,12 +53,12 @@ const [left,setleft] = useState(50)
 const [id,setid] = useState('')
 
 
-getData("id").then((id)=>{
+getData("nick").then((id)=>{
 setid(id)
 
 })   
     return (
-<View style={name_id === id ? styles.container : styles.containerd} >
+<View style={nick === id ? styles.container : styles.containerd} >
 <Text style={styles.nick}>
   {
     nick

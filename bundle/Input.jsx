@@ -106,7 +106,7 @@ sendmassage()
     }
 
     function sendmassage() {
-      Keyboard.dismiss();            
+      //
       
    
       if (message == "") {
@@ -141,7 +141,7 @@ sendmassage()
             Alert.alert("Eror 404","Please resubmit to the server")
             console.error(error);
           }).finally((data)=>{
-            
+            Keyboard.dismiss();            
             setmassage('')
             inputRef.current.clear();
           }) 
