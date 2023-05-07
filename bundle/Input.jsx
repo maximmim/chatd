@@ -16,7 +16,7 @@ import { useNavigation } from '@react-navigation/native';
 import GradientButton from './buthon';
 import axios from 'axios';
 import { Platform } from 'react-native';
-
+import { Audio } from 'expo-av';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -57,6 +57,7 @@ const saveData = async (key, value) => {
   };
 
 export default function Input() {
+  const [sound, setSound] = useState();
   const Tab = createBottomTabNavigator()
     const navigation = useNavigation();
     const [message, setmassage] = useState('');
@@ -75,6 +76,7 @@ getData("nick").then((data)=>{
 
 
     const handleFocus = () => { 
+     // playSound()
 sendmassage()
       if (Platform.OS === 'web') {
         setInputFocused(false);
@@ -88,6 +90,7 @@ sendmassage()
     };
   
     const handleBlur = () => {
+      //playSound()
       sendmassage()
       if (Platform.OS === 'web') {
         up()
@@ -99,7 +102,16 @@ sendmassage()
     };
   
     const containerStyle = inputFocused ? { top: -270 } : null;
-  
+          async function playSound() {
+          console.log('Loading Sound');
+          const { sound } = await Audio.Sound.createAsync(
+            require('../assets/sendmessage.wav')
+          );
+          setSound(sound);
+      
+          console.log('Playing Sound');
+          await sound.playAsync();
+        }
   
     function da() {
     
@@ -122,7 +134,7 @@ sendmassage()
         
       }
       else {
-     
+        
       //navigation.navigate('Головна')
         axios.post('https://644ab0e4a8370fb32155be44.mockapi.io/item', {
           msg: message,
@@ -144,6 +156,7 @@ sendmassage()
             Keyboard.dismiss();            
             setmassage('')
             inputRef.current.clear();
+            playSound()
           }) 
         }}
     }

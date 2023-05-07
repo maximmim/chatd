@@ -18,9 +18,17 @@ import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Audio } from 'expo-av';
+import * as Permissions from 'expo-permissions';
+
+
+
+
 
 export default function Main() {
 
+
+  
 const saveData = async (key, value) => {
     try {
       await AsyncStorage.setItem(key, value);
@@ -28,6 +36,20 @@ const saveData = async (key, value) => {
       console.error('Помилка збереження даних локально:', error);
     }
   };
+  
+
+
+  async function playSound() {
+    console.log('Loading Sound');
+    const { sound } = await Audio.Sound.createAsync(
+      require('../assets/getmessage.wav')
+    );
+    setSound(sound);
+
+    console.log('Playing Sound');
+    await sound.playAsync();
+  }
+
   // отримання даних
   const getData = async (key) => {
     try {
@@ -55,16 +77,24 @@ const saveData = async (key, value) => {
       console.error('Помилка очищення локального сховища:', error);
     }
   };
-  
+const [count, setCount] = useState(0);
+  const [sound, setSound] = useState(null);
     const navigation = useNavigation()
     const [items,setitems] = useState([])
     const [keybord,setkeydord] = useState(true)
-
+    function g() {
+      console.log('New object added!');
+      // Воспроизвести звуковой сигнал
+    }    const url = 'https://644ab0e4a8370fb32155be44.mockapi.io/item';
+    
+    // Счетчик объектов на сервере
+    let objectCount = 0;
 
     useEffect(f,[])
-    function f() {        
+    function f() {  
+      getdate()      
      setInterval(getdate,2000);
-
+setInterval(checkServer,1000)
     getData("id").then((data)=> {
         if (data == undefined) {
             const num1 = Math.floor(Math.random() * 10);
@@ -82,25 +112,62 @@ else {
 }
     })
 
-      }
-       
 
-      
+    
+    // URL-адрес сервера
+
+    
+    // Функция для опроса сервера
+
+    
+
+      }
+
+    async function checkServer() {
+      try {
+        const response = await axios.get(url);
+        const newObjectCount = response.data.length;
+        if (newObjectCount > objectCount) {
+          Playsound()
+          objectCount = newObjectCount; // Обновить счетчик объектов на сервере
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+
+
+
+  const Playsound = async () => {
+    console.log('Loading Sound');
+    const { sound } = await Audio.Sound.createAsync(
+      require('../assets/getmessage.wav')
+    );
+    setSound(sound);
+
+    console.log('Playing Sound');
+    await sound.playAsync();
+  };
+ 
+
+          function ceckdate() {
+
+
+    }
          
  
     function getdate() { 
 
-       
+    
        //sendPushNotification(message) 
        
-    
-       
 
-       
             axios.get('https://644ab0e4a8370fb32155be44.mockapi.io/item')
              .then(response => {
                // Handle the response data
-               setitems(response.data)
+               setitems(response.data)        
+   
                 //rconsole.log(response.data)
              })
              .catch(error => {
@@ -109,14 +176,13 @@ else {
                console.error(error);
                //Vibration.vibrate(1000)
              })
-       
-       
-       
+              
        }
   return (
     
 <View style={styles.container}>
 <FlatList
+inverted={false}
 data={items}
 renderItem={({item})=>(
 <Message dext={item.msg} name_id={item.name_id} nick={item.nick}/>
