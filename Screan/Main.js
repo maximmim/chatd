@@ -9,25 +9,27 @@ import {
     ImageComponent,
     TouchableOpacity,
     Vibration,
-    FlatList
+    FlatList,
+    Animated
 } from 'react-native';
 import Input from '../bundle/Input';
 import Message from '../bundle/massage';
-import { useEffect, useState } from 'react';
+import { useEffect, useState,useRef } from 'react';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Audio } from 'expo-av';
 import * as Permissions from 'expo-permissions';
-
+import { gstyles } from '../gstyle';
+import Indicator from '../bundle/indicator';
 
 
 
 
 export default function Main() {
 
-
+const test = false
   
 const saveData = async (key, value) => {
     try {
@@ -39,16 +41,9 @@ const saveData = async (key, value) => {
   
 
 
-  async function playSound() {
-    console.log('Loading Sound');
-    const { sound } = await Audio.Sound.createAsync(
-      require('../assets/getmessage.wav')
-    );
-    setSound(sound);
+ const [fadeAnim, setFadeAnim] = useState(new Animated.Value(0)); 
 
-    console.log('Playing Sound');
-    await sound.playAsync();
-  }
+
 
   // отримання даних
   const getData = async (key) => {
@@ -77,6 +72,7 @@ const saveData = async (key, value) => {
       console.error('Помилка очищення локального сховища:', error);
     }
   };
+  let volume = 0;
 const [count, setCount] = useState(0);
   const [sound, setSound] = useState(null);
     const navigation = useNavigation()
@@ -89,12 +85,14 @@ const [count, setCount] = useState(0);
     
     // Счетчик объектов на сервере
     let objectCount = 0;
-
+    let timeup = 1500
+    let timeupvol = timeup +1000
     useEffect(f,[])
-    function f() {  
+    function f() {        
+
       getdate()      
-     setInterval(getdate,2000);
-setInterval(checkServer,1000)
+     setInterval(getdate,timeup);
+setInterval(checkServer,timeupvol)
     getData("id").then((data)=> {
         if (data == undefined) {
             const num1 = Math.floor(Math.random() * 10);
@@ -123,7 +121,9 @@ else {
 
       }
 
+      
     async function checkServer() {
+      
       try {
         const response = await axios.get(url);
         const newObjectCount = response.data.length;
@@ -131,31 +131,51 @@ else {
           Playsound()
           objectCount = newObjectCount; // Обновить счетчик объектов на сервере
         }
+
       } catch (error) {
         console.error(error);
       }
     }
 
+//как зделать чтоби FlatList всегда бил внизу expo
 
+     async function s() {
 
-
-  const Playsound = async () => {
-    console.log('Loading Sound');
-    const { sound } = await Audio.Sound.createAsync(
+      
+          console.log('Loading Sound');
+    const { sound } =  await Audio.Sound.createAsync(
       require('../assets/getmessage.wav')
     );
     setSound(sound);
 
     console.log('Playing Sound');
     await sound.playAsync();
-  };
+    
+}
+
+
+
+  async function Playsound()  {
+    getData("nick").then(data  => {
+
+    
+        items.map(nickd => {
+          if (nickd.nick ===  data) {
+            
+          }
+          else {
+s()
+
+}
+          })
+        })
+
+}
+
+
+
  
 
-          function ceckdate() {
-
-
-    }
-         
  
     function getdate() { 
 
@@ -171,61 +191,42 @@ else {
                 //rconsole.log(response.data)
              })
              .catch(error => {
+              if (test == true) {
+
+              
                // Handle any errors
                Alert.alert("Eror 404","Please a reconnect to server")
                console.error(error);
                //Vibration.vibrate(1000)
+              }
              })
               
+
        }
+
+
+
+
+       
   return (
     
-<View style={styles.container}>
+<View style={gstyles.container}>
 <FlatList
-inverted={false}
+
 data={items}
+
 renderItem={({item})=>(
 <Message dext={item.msg} name_id={item.name_id} nick={item.nick}/>
 )}
 />
+{/*<Indicator/>*/}
 
 {keybord && <Input/> }
+
+
 
 <StatusBar style="auto" />
 </View>
   );
 }
 
-const styles = StyleSheet.create({
-    bottom: {
-        position: 'absolute', // Абсолютное позиционирование
-        bottom: 0, // Расположение внизу экрана
-        
-      },
-    massage: {
-        display: "flex",
-        flexDirection: "row",
-        alignItems: "center",
-        padding: 10,
-        borderRadius: 8,
-        marginBottom: 10,
-        maxWidth: 80,
-      },
-      avatar: {
-        width: 40,
-        height: 40,
-        borderRadius: 50,
-        marginRight: 10,
-      },
-      text: {
-        fontSize: 16,
-        fontWeight: 400,
-        lineHeight: 1.5,
-      },
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

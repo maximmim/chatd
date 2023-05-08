@@ -19,7 +19,7 @@ import { SelectList } from 'react-native-dropdown-select-list';
 import { useNavigation } from '@react-navigation/native';
 import { addNotificationReceivedListener } from 'expo-notifications';
 import { AppLoadingManager } from 'expo';
-
+import { gstyles } from '../gstyle';
 
 const saveData = async (key, value) => {
     try {
@@ -124,7 +124,7 @@ function sendnick() {
 }
 
   return ( 
-    <View style={styles.container}>
+    <View style={gstyles.container}>
 {
 
 g === "Maxim" && (
@@ -132,10 +132,10 @@ g === "Maxim" && (
 <TouchableOpacity onPress={deleteAllItems}><Text style={{position:"absolute",top:-200,left:-45,fontSize:30}}>delete</Text></TouchableOpacity>
   </View>
 )}
-
+<Text style={gstyles.bottom}>BETA 0.5v</Text>
 {g === undefined && 
 
-<View style={styles.cos}>
+<View style={gstyles.cos}>
 
 
 
@@ -144,7 +144,7 @@ g === "Maxim" && (
 <TextInput
 ref={input}
 
-        style={styles.input}
+        style={gstyles.input}
         value={nick}
         placeholder="Ведіть свій нік"
         onChangeText={text => setnick(text)}
@@ -177,26 +177,3 @@ placeholder={'Select your gender'}
   );
 }
 
-const styles = StyleSheet.create({
-  cos:{
-  top:140
-  },
-  input: {
-    height: 50,
-    width:350,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    borderRadius: 10,
-    paddingHorizontal: 10,
-    fontSize: 16,
-    
-   
-},
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
-});

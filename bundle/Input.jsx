@@ -17,7 +17,7 @@ import GradientButton from './buthon';
 import axios from 'axios';
 import { Platform } from 'react-native';
 import { Audio } from 'expo-av';
-
+import { gstyles } from '../gstyle';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
@@ -80,7 +80,8 @@ getData("nick").then((data)=>{
 sendmassage()
       if (Platform.OS === 'web') {
         setInputFocused(false);
-        down()
+        down();
+        
         // ваш код для приложения React Native на вебе
       } else {
         setInputFocused(true);
@@ -88,12 +89,12 @@ sendmassage()
       }
       
     };
-  
+ 
     const handleBlur = () => {
       //playSound()
       sendmassage()
       if (Platform.OS === 'web') {
-        up()
+        up();
         // ваш код для приложения React Native на вебе
       } else {
         setInputFocused(false);
@@ -117,7 +118,7 @@ sendmassage()
     
     }
 
-    function sendmassage() {
+     function sendmassage() {
       //
       
    
@@ -157,17 +158,15 @@ sendmassage()
             setmassage('')
             inputRef.current.clear();
             playSound()
+            
           }) 
         }}
     }
     
-      
 
 
-      
-     
 
-    function down() {
+     function down() {
       navigation.setOptions({
         tabBarStyle: [{ display: "none" }, null],
       })
