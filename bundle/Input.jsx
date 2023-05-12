@@ -82,10 +82,10 @@ sendmassage()
         setInputFocused(false);
         down();
         
-        // ваш код для приложения React Native на вебе
+       
       } else {
         setInputFocused(true);
-        // ваш код для других платформ
+        
       }
       
     };
@@ -95,10 +95,10 @@ sendmassage()
       sendmassage()
       if (Platform.OS === 'web') {
         up();
-        // ваш код для приложения React Native на вебе
+       
       } else {
         setInputFocused(false);
-        // ваш код для других платформ
+        
       }
     };
   
@@ -150,9 +150,14 @@ sendmassage()
 
           })
           .catch(error => {
+            if (global.test == true) {
+
+           
             // Handle any errors
-            Alert.alert("Eror 404","Please resubmit to the server")
+            alert(error)
             console.error(error);
+          
+          }
           }).finally((data)=>{
             Keyboard.dismiss();            
             setmassage('')

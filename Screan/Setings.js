@@ -62,9 +62,7 @@ const saveData = async (key, value) => {
 
 export default function Setings() {
 const [y,sety] = useState("")
-const [cae,setcae] =useState("")
-const [csae,setcsae] =useState("")
-const navigation = useNavigation()
+
 const input = useRef()
 const [nick,setnick] = useState("")
 const [g,setg] = useState("")
@@ -88,9 +86,7 @@ if (data === undefined)
 
 },[])
 
-function da() {
 
-}
 
 async function deleteAllItems() {
     try {
@@ -105,22 +101,16 @@ async function deleteAllItems() {
       
     }
   }  
-  const catar = [
-    {key:'Man',value:"Man"},
-    {key:'Girl',value:"Girl"},
-  ]
 
-function das() {
-  saveData("gender",cae)
-  navigation.navigate("home")
-  alert(cae)
-}
 function sendnick() {
   saveData("nick",nick)
   alert("Потрібне перезавантаження буль ласка перезавантажте застосунок")
   
   
 
+}
+function vzlom() {
+  alert("Скажи Максу що він лох я його взломав")
 }
 
   return ( 
@@ -132,7 +122,7 @@ g === "Maxim" && (
 <TouchableOpacity onPress={deleteAllItems}><Text style={{position:"absolute",top:-200,left:-45,fontSize:30}}>delete</Text></TouchableOpacity>
   </View>
 )}
-<Text style={gstyles.bottom}>BETA 0.5v</Text>
+<Text onPress={vzlom} style={gstyles.bottom}>BETA 0.8v</Text>
 {g === undefined && 
 
 <View style={gstyles.cos}>
@@ -155,8 +145,9 @@ ref={input}
 </View>
 
 }
+{/*
       <Text>Loading...</Text>
-
+*/}
 
 
 

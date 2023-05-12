@@ -6,11 +6,12 @@ import {
     TextInput,
     Button,
     Alert,
-    ImageComponent,
+    Image,
     TouchableOpacity,
     Vibration,
     FlatList,
-    Animated
+    Animated,
+    ImageComponent
 } from 'react-native';
 import Input from '../bundle/Input';
 import Message from '../bundle/massage';
@@ -23,29 +24,17 @@ import { Audio } from 'expo-av';
 import * as Permissions from 'expo-permissions';
 import { gstyles } from '../gstyle';
 import Indicator from '../bundle/indicator';
+import NetInfo from '@react-native-community/netinfo';
 
 
 
-
-export default function Main() {
-
-const test = false
-  
 const saveData = async (key, value) => {
     try {
       await AsyncStorage.setItem(key, value);
     } catch (error) {
       console.error('Помилка збереження даних локально:', error);
     }
-  };
-  
-
-
- const [fadeAnim, setFadeAnim] = useState(new Animated.Value(0)); 
-
-
-
-  // отримання даних
+};
   const getData = async (key) => {
     try {
       const value = await AsyncStorage.getItem(key);
@@ -55,69 +44,51 @@ const saveData = async (key, value) => {
     } catch (error) {
       console.error('Помилка отримання даних локально:', error);
     }
-  };
-  // видалення даних
+};
   const removeData = async (key) => {
     try {
       await AsyncStorage.removeItem(key);
     } catch (error) {
       console.error('Помилка видалення даних локально:', error);
     }
-  };
-  // очищення всього локального сховища
+};
  const clearAllData = async () => {
     try {
       await AsyncStorage.clear();
     } catch (error) {
       console.error('Помилка очищення локального сховища:', error);
     }
-  };
-  let volume = 0;
+};
+
+
+export default  function Main() {
+
+
 const [count, setCount] = useState(0);
-  const [sound, setSound] = useState(null);
-    const navigation = useNavigation()
-    const [items,setitems] = useState([])
-    const [keybord,setkeydord] = useState(true)
-    function g() {
-      console.log('New object added!');
-      // Воспроизвести звуковой сигнал
-    }    const url = 'https://644ab0e4a8370fb32155be44.mockapi.io/item';
-    
-    // Счетчик объектов на сервере
-    let objectCount = 0;
-    let timeup = 1500
-    let timeupvol = timeup +1000
-    useEffect(f,[])
-    function f() {        
+const [sound, setSound] = useState(null);
+const navigation = useNavigation()
+const [items,setitems] = useState([])
+const [keybord,setkeydord] = useState(true)
+const [vis,setvis] = useState(true)
 
+
+
+useEffect(start,[])
+global.test = false;
+const source = axios.CancelToken.source();
+const url = 'https://644ab0e4a8370fb32155be44.mockapi.io/item';
+let objectCount = 0;
+let timeup = 2000;
+let volume = false;
+
+
+
+
+function start() {        
+    
       getdate()      
-     setInterval(getdate,timeup);
-setInterval(checkServer,timeupvol)
-    getData("id").then((data)=> {
-        if (data == undefined) {
-            const num1 = Math.floor(Math.random() * 10);
-            const num2 = Math.floor(Math.random() * 10);
-            const num3 = Math.floor(Math.random() * 10);
-            const num4 = Math.floor(Math.random() * 10);
-            const id = `${num1}${num2}${num3}${num4}`;
-            saveData("id",id)
+ setInterval(getdate,timeup);
 
-}
-else {
-    getData("id").then((data)=> {
-       // alert(data)
-    })
-}
-    })
-
-
-    
-    // URL-адрес сервера
-
-    
-    // Функция для опроса сервера
-
-    
 
       }
 
@@ -129,7 +100,7 @@ else {
         const newObjectCount = response.data.length;
         if (newObjectCount > objectCount) {
           Playsound()
-          objectCount = newObjectCount; // Обновить счетчик объектов на сервере
+          objectCount = newObjectCount; 
         }
 
       } catch (error) {
@@ -137,7 +108,6 @@ else {
       }
     }
 
-//как зделать чтоби FlatList всегда бил внизу expo
 
      async function s() {
 
@@ -156,46 +126,96 @@ else {
 
 
   async function Playsound()  {
-    getData("nick").then(data  => {
+    console.log(volume)
+    if (volume === true) {
+console.log("1fesfese")
+    
+
+    getData("nick").then((data)  => {
 
     
         items.map(nickd => {
-          if (nickd.nick ===  data) {
-            
+          if (nickd.nick ==  data) {
+            console.log("Повідомлення було відправлино")
           }
           else {
-s()
-
+s();
+console.log("Повідомлення получено")
 }
           })
         })
-
+      
+      }
+    else {
+      volume =  true
+    }
 }
 
 
 
- 
+async function deleteAllItems() {
+  try {
+    const response = await axios.get("https://644ab0e4a8370fb32155be44.mockapi.io/item");
+    const itemsd = response.data;
+    
+    await Promise.all(itemsd.map((item) => axios.delete(`https://644ab0e4a8370fb32155be44.mockapi.io/item/${item.id}`)));
 
+    console.log("All items deleted successfully!");
+  } catch (error) {
+    console.error(error);
+    
+  }
+}  
+    
+function repeatWithDelay() {
+  
+  let count = 0;
+  const interval = setInterval(() => {
+    
+    deleteAllItems()
+    count++;
+    if (count === 20 || global.newObjectCount === 0) {
+      clearInterval(interval);
+      
+    }
+  }, 5000);
+}
  
     function getdate() { 
 
-    
-       //sendPushNotification(message) 
-       
 
-            axios.get('https://644ab0e4a8370fb32155be44.mockapi.io/item')
+NetInfo.fetch().then(state => {
+  if (state.isConnected === false) {
+    setvis(false)
+    console.log("Немає підключеня до інтернету")
+  }
+});
+
+            axios.get(url)
              .then(response => {
-               // Handle the response data
+             
                setitems(response.data)        
-   
-                //rconsole.log(response.data)
+               global.newObjectCount = response.data.length;
+               if (global.newObjectCount > objectCount) {
+                 Playsound()
+                 objectCount = global.newObjectCount; 
+               }
+               else if (global.newObjectCount >= 99) {
+
+
+source.cancel('All requests canceled');
+deleteAllItems()
+                
+                
+               }
+              
              })
              .catch(error => {
               if (test == true) {
 
               
-               // Handle any errors
-               Alert.alert("Eror 404","Please a reconnect to server")
+              
+               alert(error)
                console.error(error);
                //Vibration.vibrate(1000)
               }
@@ -211,10 +231,10 @@ s()
   return (
     
 <View style={gstyles.container}>
+
+{vis && <View style={gstyles.container}>
 <FlatList
-
 data={items}
-
 renderItem={({item})=>(
 <Message dext={item.msg} name_id={item.name_id} nick={item.nick}/>
 )}
@@ -223,7 +243,12 @@ renderItem={({item})=>(
 
 {keybord && <Input/> }
 
+</View>}
 
+{!vis &&<View style={gstyles.container}>
+    <Text>В даний момент в вас нема інтернету😐</Text>
+    <Image source={require('../assets/Eror.png')}/>
+</View>}
 
 <StatusBar style="auto" />
 </View>

@@ -1,21 +1,22 @@
 {
   "files": {
-    "main.js": "/static/js/main.3748bf0f.js",
-    "static/js/350.bd724893.js": "/static/js/350.bd724893.js",
+    "main.js": "/static/js/main.8b7ef567.js",
+    "static/js/26.05951178.js": "/static/js/26.05951178.js",
     "static/media/getmessage.wav": "/static/media/getmessage.5035b3105d231936b2d5.wav",
     "static/media/sendmessage.wav": "/static/media/sendmessage.3b1d51d922c64f908b94.wav",
     "static/media/Ionicons.ttf": "/static/media/Ionicons.3517aeaa34b2f8cd8eef.ttf",
+    "static/media/Eror.png": "/static/media/Eror.0ff1be60aa39e0591552.png",
     "favicon.ico": "/favicon.ico",
     "index.html": "/index.html",
     "favicon-32.png": "/favicon-32.png",
     "favicon-16.png": "/favicon-16.png",
-    "serve.json": "/serve.json",
     "manifest.json": "/manifest.json",
-    "main.3748bf0f.js.map": "/static/js/main.3748bf0f.js.map",
-    "350.bd724893.js.map": "/static/js/350.bd724893.js.map"
+    "serve.json": "/serve.json",
+    "main.8b7ef567.js.map": "/static/js/main.8b7ef567.js.map",
+    "26.05951178.js.map": "/static/js/26.05951178.js.map"
   },
   "entrypoints": [
-    "static/js/350.bd724893.js",
-    "static/js/main.3748bf0f.js"
+    "static/js/26.05951178.js",
+    "static/js/main.8b7ef567.js"
   ]
 }

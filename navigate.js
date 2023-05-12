@@ -20,7 +20,7 @@ export default function Navigate() {
         <Tab.Navigator
 
       screenOptions={({route})=> ({
-        
+        headerTitleAlign: 'center',
 
         
         tabBarIcon: ({focused,size,colur}) => {

@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
         
     },
     containerd: {
-      backgroundColor: '#808080',
+      backgroundColor: '#d9d9d9',
       borderRadius:10,
       
       flex:1,
