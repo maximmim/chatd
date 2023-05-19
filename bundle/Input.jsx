@@ -125,15 +125,8 @@ sendmassage()
       if (message == "") {
 
       }
-      else {
-      if (nick === undefined) {
-        
+      
 
-        navigation.navigate("Setings")
-
-
-        
-      }
       else {
         
       //navigation.navigate('Головна')
@@ -166,7 +159,7 @@ sendmassage()
             
           }) 
         }}
-    }
+    
     
 
 
@@ -190,8 +183,7 @@ sendmassage()
     <View style={styles.bottom}>
 <TextInput
 ref={inputRef}
-                onFocus={handleFocus}
-                onBlur={handleBlur}
+
         style={styles.input}
         value={message}
         placeholder="Що в тебе нового солоденький ?"
@@ -213,9 +205,9 @@ const styles = StyleSheet.create({
     bottom: {
         position: 'absolute', // Абсолютное позиционирование
         bottom: 0, // Расположение внизу экрана
-        
       },
     input: {
+    
         height: 50,
         width:350,
         borderColor: '#ccc',

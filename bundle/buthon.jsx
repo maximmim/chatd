@@ -10,7 +10,7 @@ const GradientButton = ({ onPress, title, colors }) => {
         style={{
           position:"absolute",
           bottom:0,
-          left:305,
+          right:-50,
           height: 50,
           width: 50,
           borderRadius: 25,
