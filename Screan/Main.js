@@ -1,3 +1,4 @@
+
 import { StatusBar } from 'expo-status-bar';
 import { 
     StyleSheet, 
@@ -61,7 +62,7 @@ const saveData = async (key, value) => {
 };
 
 
-export default  function Main() {
+export default function Main() {
 
 
 const [count, setCount] = useState(0);
@@ -70,8 +71,9 @@ const navigation = useNavigation()
 const [items,setitems] = useState([])
 const [keybord,setkeydord] = useState(true)
 const [vis,setvis] = useState(true)
-
-
+const [nick,setnick] = useState("")
+const [setup,startsetup] = useState(false);
+const [noint,ddaw] = useState(false);
 
 useEffect(start,[])
 global.test = false;
@@ -85,11 +87,28 @@ let volume = false;
 
 
 function start() {        
+  
+
+ getData("nick").then((data)=>{
+  setnick(data)
+
+  if (data === undefined) {
+        
+      startsetup(true)
+      setvis(false)
+
+
+
+
     
-      getdate()      
+  }
+  else {
+          getdate()      
  setInterval(getdate,timeup);
 
+  } 
 
+})
       }
 
       
@@ -120,7 +139,6 @@ function start() {
 
     console.log('Playing Sound');
     await sound.playAsync();
-    
 }
 
 
@@ -166,7 +184,23 @@ async function deleteAllItems() {
     
   }
 }  
-    
+function sendnick() {
+  if( nick === undefined ){
+    alert("В вас пустий нік")
+  }
+  else if (nick == ' ') {
+    alert("Всеодно пустий")
+  }
+  else {
+
+  
+  saveData("nick",nick)
+  //alert("Потрібне перезавантаження буль ласка перезавантажте застосунок")
+  
+  startsetup(false)
+  setvis(true)
+}
+}
 function repeatWithDelay() {
   
   let count = 0;
@@ -183,14 +217,12 @@ function repeatWithDelay() {
  
     function getdate() { 
 
-
 NetInfo.fetch().then(state => {
   if (state.isConnected === false) {
-    setvis(false)
+    ddaw(true)
     console.log("Немає підключеня до інтернету")
   }
 });
-
             axios.get(url)
              .then(response => {
              
@@ -205,8 +237,7 @@ NetInfo.fetch().then(state => {
 
 source.cancel('All requests canceled');
 deleteAllItems()
-                
-                
+
                }
               
              })
@@ -227,10 +258,11 @@ deleteAllItems()
 
 
 
-       
   return (
     
 <View style={gstyles.container}>
+
+
 
 {vis && <View style={gstyles.container}>
 <FlatList
@@ -245,11 +277,37 @@ renderItem={({item})=>(
 
 </View>}
 
-{!vis &&<View style={gstyles.container}>
+{noint &&<View style={gstyles.container}>
     <Text>В даний момент в вас нема інтернету😐</Text>
     <Image source={require('../assets/Eror.png')}/>
 </View>}
+{setup && <View style={gstyles.cod}>
+  
 
+
+
+
+  <Image style={gstyles.imae} blurRadius={5} source={require('../assets/splash.jpg')}/>
+
+  <View><TextInput
+
+
+        style={gstyles.input}
+        value={nick}
+        placeholder="Веди свій нік"
+        onChangeText={text => setnick(text)}
+      /> 
+    
+     
+<TouchableOpacity >
+  <Button onPress={sendnick} title='Enter'></Button>
+</TouchableOpacity>
+<Text style={gstyles.gf}>Привіт давай зарегеструємся </Text>
+</View>
+
+</View>
+
+}
 <StatusBar style="auto" />
 </View>
   );

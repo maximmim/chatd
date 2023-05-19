@@ -66,7 +66,7 @@ const [y,sety] = useState("")
 const input = useRef()
 const [nick,setnick] = useState("")
 const [g,setg] = useState("")
-
+const url = 'https://644ab0e4a8370fb32155be44.mockapi.io/item';
 useEffect(()=> {
     getData("id").then((data)=>{
 sety(data);
@@ -74,13 +74,23 @@ sety(data);
 });
 getData("nick").then((data)=>{
   setg(data);
+
 if (data === undefined) 
 {
   alert("В вас нема ніка")
 }
   });
 //removeData("nick")
+setInterval(()=>{
+axios.get(url)
+             .then(response => {
+             
+     
+               global.newObjectCount = response.data.length;
 
+              
+             })
+},4000)
 
 
 
@@ -122,29 +132,8 @@ g === "Maxim" && (
 <TouchableOpacity onPress={deleteAllItems}><Text style={{position:"absolute",top:-200,left:-45,fontSize:30}}>delete</Text></TouchableOpacity>
   </View>
 )}
-<Text onPress={vzlom} style={gstyles.bottom}>BETA 0.8v</Text>
-{g === undefined && 
-
-<View style={gstyles.cos}>
-
-
-
-
-
-<TextInput
-ref={input}
-
-        style={gstyles.input}
-        value={nick}
-        placeholder="Ведіть свій нік"
-        onChangeText={text => setnick(text)}
-      />  
-<TouchableOpacity >
-  <Button onPress={sendnick} title='Enter'></Button>
-</TouchableOpacity>
-</View>
-
-}
+<Text style={gstyles.bottom}>BETA 1.0v</Text>
+<Text onPress={vzlom} style={[gstyles.bottom,{bottom:20}]}>Количество собщений:{global.newObjectCount}</Text>
 {/*
       <Text>Loading...</Text>
 */}

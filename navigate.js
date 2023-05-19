@@ -20,6 +20,7 @@ export default function Navigate() {
         <Tab.Navigator
 
       screenOptions={({route})=> ({
+        tabBarStyle: [{ display: "none" }, null],
         headerTitleAlign: 'center',
 
         
@@ -29,16 +30,16 @@ export default function Navigate() {
             iconName = focused ? "ios-home" : "ios-home-outline";
           }
 
-          else if(route.name ==="Setings") {
-            iconName = focused ? "cog" : "cog-outline";
+          else if(route.name ==="Admin") {
+            iconName = focused ? "construct" : "construct-outline";
           }
 
           return <Ionic name={iconName} size={size} colour={colur}/>
         },
       })}>
         
-        <Tab.Screen name='Home' component={Main}/>
-        <Tab.Screen name='Setings' component={Setings}/>
+        <Tab.Screen options={{ headerShown: false }} name='Home' component={Main}/>
+        <Tab.Screen options={{ headerShown: false }} name='Admin' component={Setings}/>
 
         
       </Tab.Navigator>

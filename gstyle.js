@@ -19,13 +19,24 @@ import { StyleSheet } from 'react-native';
         input: {
           height: 50,
           width:350,
-          borderColor: '#ccc',
+          borderColor: 'grey',
+          color:"black",
+          backgroundColor:"#fff",
           borderWidth: 1,
           borderRadius: 10,
           paddingHorizontal: 10,
           fontSize: 16,
-          
+          marginTop:-400
          
+      },
+      gf: {
+        color:"white",
+        marginTop:-400,
+        marginLeft:30,
+        fontSize: 22,
+        width:300,
+        alignItems: 'center',
+        justifyContent: 'center',
       },
     bottom: {
         position: 'absolute', // Абсолютное позиционирование
@@ -58,4 +69,18 @@ import { StyleSheet } from 'react-native';
     alignItems: 'center',
     justifyContent: 'center',
   },
+  cod: {
+
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  imae: {
+    borderRadius:20,
+    height: 870,
+    width:400,
+    position: 'relative',
+    overflow: 'hidden',
+  }
 });
