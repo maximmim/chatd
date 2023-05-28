@@ -125,15 +125,13 @@ function vzlom() {
 
   return ( 
     <View style={gstyles.container}>
-{
 
-g === "Maxim" && (
   <View>
 <TouchableOpacity onPress={deleteAllItems}><Text style={{position:"absolute",top:-200,left:-45,fontSize:30}}>delete</Text></TouchableOpacity>
   </View>
-)}
-<Text style={gstyles.bottom}>BETA 1.0v</Text>
-<Text onPress={vzlom} style={[gstyles.bottom,{bottom:20}]}>Количество собщений:{global.newObjectCount}</Text>
+
+
+<Text style={[gstyles.bottom,{bottom:20}]}>Количество собщений:{global.newObjectCount}</Text>
 {/*
       <Text>Loading...</Text>
 */}

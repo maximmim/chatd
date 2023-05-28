@@ -128,10 +128,16 @@ sendmassage()
       
 
       else {
-        
+        var dat = new Date
+        var clock = dat.getHours()
+        var minuts = dat.getMinutes()
+        var day = dat.getDay()
+       
+        var data = `${clock}`+":"+`${minuts}`
       //navigation.navigate('Головна')
-        axios.post('https://644ab0e4a8370fb32155be44.mockapi.io/item', {
+        axios.post(global.url, {
           msg: message,
+          data:data,
           name_id:id,
           nick:nick
         
@@ -180,10 +186,11 @@ sendmassage()
 
 
 
-    <View style={styles.bottom}>
-<TextInput
-ref={inputRef}
-
+    <View style={gstyles.bottom}>
+<TextInput  
+        ref={inputRef}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
         style={styles.input}
         value={message}
         placeholder="Що в тебе нового солоденький ?"

@@ -1,1 +1,1 @@
-# chatd beta 0.8v
+# chatd beta 1.2v

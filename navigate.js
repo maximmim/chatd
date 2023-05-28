@@ -9,18 +9,37 @@ import Setup from "./Screan/Setup";
 import { NavigationContainer } from '@react-navigation/native';
 import { useState,useEffect, useRef} from 'react';
 import Navig from "./navig";
+import Accaunt from "./Screan/Accaunt";
+import ScreanMessage from "./Screan/Screanmessage";
+import Loading from "./Screan/Loading";
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator()
 
-
 export default function Navigate() {
     
-    return <NavigationContainer>
+  return <NavigationContainer>
+  <Stack.Navigator>                
+      
+<Stack.Screen
+ options={{ headerShown: false }} name='Chat' component={Screan1}
+      />         
+            
+<Stack.Screen
+ name='ScreanMessage' component={ScreanMessage}
+      />         
+<Stack.Screen
+ name='Setup' component={Setup}
+      />         
+  </Stack.Navigator>
+</NavigationContainer>
+}
 
-        <Tab.Navigator
+function Screan1() {
+    
+    return  <Tab.Navigator
 
       screenOptions={({route})=> ({
-        tabBarStyle: [{ display: "none" }, null],
+        //tabBarStyle: [{ display: "none" }, null],
         headerTitleAlign: 'center',
 
         
@@ -33,15 +52,17 @@ export default function Navigate() {
           else if(route.name ==="Admin") {
             iconName = focused ? "construct" : "construct-outline";
           }
-
+          else if(route.name ==="Accaunt") {
+            iconName = focused ? "md-settings-sharp" : "ios-settings-outline";
+          }
           return <Ionic name={iconName} size={size} colour={colur}/>
         },
       })}>
         
-        <Tab.Screen options={{ headerShown: false }} name='Home' component={Main}/>
-        <Tab.Screen options={{ headerShown: false }} name='Admin' component={Setings}/>
-
+        <Tab.Screen name='Home' component={Main}/>
+        {global.admin && <Tab.Screen  name='Admin' component={Setings}/>}
+        <Tab.Screen name='Accaunt' component={Accaunt}/>
         
       </Tab.Navigator>
-    </NavigationContainer>
+   
 }

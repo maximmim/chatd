@@ -12,7 +12,8 @@ import {
     Vibration,
     FlatList,
     Animated,
-    ImageComponent
+    ImageComponent,
+    Keyboard
 } from 'react-native';
 import Input from '../bundle/Input';
 import Message from '../bundle/massage';
@@ -26,6 +27,7 @@ import * as Permissions from 'expo-permissions';
 import { gstyles } from '../gstyle';
 import Indicator from '../bundle/indicator';
 import NetInfo from '@react-native-community/netinfo';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 
 
@@ -72,37 +74,46 @@ const [items,setitems] = useState([])
 const [keybord,setkeydord] = useState(true)
 const [vis,setvis] = useState(true)
 const [nick,setnick] = useState("")
-const [setup,startsetup] = useState(false);
+
 const [noint,ddaw] = useState(false);
 
 useEffect(start,[])
 global.test = false;
 const source = axios.CancelToken.source();
-const url = 'https://644ab0e4a8370fb32155be44.mockapi.io/item';
+global.url = 'https://644ab0e4a8370fb32155be44.mockapi.io/item';
 let objectCount = 0;
 let timeup = 2000;
 let volume = false;
 
 
-
+function down() {
+  navigation.setOptions({
+    headerShown: false ,
+    tabBarStyle: [{ display: "none" }, null],
+  })
+}
+function up() {
+  navigation.setOptions({
+    headerShown: true,
+    tabBarStyle: [{ display: "flex" }, null],
+  })
+}
 
 function start() {        
-  
+
+
 
  getData("nick").then((data)=>{
   setnick(data)
 
   if (data === undefined) {
-        
-      startsetup(true)
-      setvis(false)
-
-
-
-
-    
+    navigation.navigate('Setup')
+ //  down()
+ //    startsetup(true)
+ //    setvis(false)
   }
   else {
+    up()
           getdate()      
  setInterval(getdate,timeup);
 
@@ -173,10 +184,10 @@ console.log("Повідомлення получено")
 
 async function deleteAllItems() {
   try {
-    const response = await axios.get("https://644ab0e4a8370fb32155be44.mockapi.io/item");
+    const response = await axios.get(global.url);
     const itemsd = response.data;
     
-    await Promise.all(itemsd.map((item) => axios.delete(`https://644ab0e4a8370fb32155be44.mockapi.io/item/${item.id}`)));
+    await Promise.all(itemsd.map((item) => axios.delete(global.url+item.id)));
 
     console.log("All items deleted successfully!");
   } catch (error) {
@@ -192,7 +203,7 @@ function sendnick() {
     alert("Всеодно пустий")
   }
   else {
-
+up()
   
   saveData("nick",nick)
   //alert("Потрібне перезавантаження буль ласка перезавантажте застосунок")
@@ -257,7 +268,7 @@ deleteAllItems()
 
 
 
-
+      
   return (
     
 <View style={gstyles.container}>
@@ -268,12 +279,13 @@ deleteAllItems()
 <FlatList
 data={items}
 renderItem={({item})=>(
-<Message dext={item.msg} name_id={item.name_id} nick={item.nick}/>
+<Message dext={item.msg} name_id={item.name_id} nick={item.nick} data={item.data}/>
 )}
 />
 {/*<Indicator/>*/}
 
 {keybord && <Input/> }
+
 
 </View>}
 
@@ -281,33 +293,6 @@ renderItem={({item})=>(
     <Text>В даний момент в вас нема інтернету😐</Text>
     <Image source={require('../assets/Eror.png')}/>
 </View>}
-{setup && <View style={gstyles.cod}>
-  
-
-
-
-
-  <Image style={gstyles.imae} blurRadius={5} source={require('../assets/splash.jpg')}/>
-
-  <View><TextInput
-
-
-        style={gstyles.input}
-        value={nick}
-        placeholder="Веди свій нік"
-        onChangeText={text => setnick(text)}
-      /> 
-    
-     
-<TouchableOpacity >
-  <Button onPress={sendnick} title='Enter'></Button>
-</TouchableOpacity>
-<Text style={gstyles.gf}>Привіт давай зарегеструємся </Text>
-</View>
-
-</View>
-
-}
 <StatusBar style="auto" />
 </View>
   );

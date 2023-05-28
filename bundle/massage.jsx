@@ -13,6 +13,7 @@ import {
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
 const saveData = async (key, value) => {
     try {
       await AsyncStorage.setItem(key, value);
@@ -48,17 +49,23 @@ const saveData = async (key, value) => {
     }
   };
 
-export default function Message({dext,name_id,nick}) {
+export default function Message({dext,name_id,nick,data}) {
+const navigation = useNavigation()
 const [left,setleft] = useState(50)
 const [id,setid] = useState('')
 
-
+function getdata() {
+//  alert(data)
+navigation.navigate('ScreanMessage',{data:data, text:dext, nick:nick})
+}
+ 
 getData("nick").then((id)=>{
 setid(id)
 
 })   
     return (
-<View style={nick === id ? styles.container : styles.containerd} >
+<TouchableOpacity onPress={getdata}>
+<View  style={nick === id ? styles.container : styles.containerd} >
 <Text style={styles.nick}>
   {
     nick
@@ -71,7 +78,7 @@ dext
  
 }
 </Text>
-</View>
+</View></TouchableOpacity>
     )
 }
 const styles = StyleSheet.create({
@@ -93,7 +100,7 @@ const styles = StyleSheet.create({
         marginLeft:230,
         padding: 12,
         margin: 10,
-        
+        top:15
     },
     containerd: {
       backgroundColor: '#d9d9d9',
@@ -106,7 +113,7 @@ const styles = StyleSheet.create({
       marginLeft:230,
       padding: 12,
       margin: 10,
-      
-  },
+      top:15
+     },
   });
   

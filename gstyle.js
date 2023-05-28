@@ -29,6 +29,37 @@ import { StyleSheet } from 'react-native';
           marginTop:-400
          
       },
+      inputd: {
+        height: 50,
+        width:350,
+        borderColor: 'grey',
+        color:"black",
+        backgroundColor:"#fff",
+        borderWidth: 1,
+        borderRadius: 10,
+        paddingHorizontal: 10,
+        fontSize: 16,
+        marginTop:250,
+    },
+    texta:{
+      top:50,
+      fontSize:20
+    },
+    data:{
+      fontSize:15,
+      top:45,
+      textAlign: 'center',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    nick:{
+      
+      fontSize:35,
+      top:-15,
+      textAlign: 'center',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
       gf: {
         color:"white",
         marginTop:-400,
@@ -42,6 +73,11 @@ import { StyleSheet } from 'react-native';
         position: 'absolute', // Абсолютное позиционирование
         bottom: 0, // Расположение внизу экрана
         
+      },
+      top:{
+        position:'absolute',
+        top:100,
+        fontSize:30
       },
     massage: {
         display: "flex",
@@ -75,6 +111,9 @@ import { StyleSheet } from 'react-native';
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  dwa:{
+  
   },
   imae: {
     borderRadius:20,
